@@ -1,0 +1,140 @@
+#content{
+    padding-bottom:55px;
+}
+h1 {
+    border-bottom: 1px solid #333;
+    font-size: 17px;
+    padding: 10px;
+    text-align: center;
+}
+body {
+    background-color: #000;
+    color: white;
+}
+* {
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+.head {
+    height: 50px;
+    padding: 10px;
+}
+#avatar {
+    border-radius: 50%;
+    float: left;
+    height: 50px;
+    margin-right: 10px;
+}
+#photo img {
+    width: 100%;
+}
+#level {
+    font-size: 14px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    line-height:20px;
+}
+#grade-name{
+    12px;
+}
+#photo-spec {
+    color: #666;
+    padding: 20px;
+    float:right;
+    text-align: right;
+}
+#photo-spec *{
+    color:#777;
+    font-size:10px;
+}
+#photo-content {
+    float: left;
+    padding: 10px;
+    width:60%;
+}
+#photo-content img{
+    vertical-align:middle;
+}
+#photo-voteup {
+    background: url(/img/voteup@2x.png) no-repeat scroll 90% 2px white;
+    background: -webkit-image-set(url(/img/voteup@2x.png) 2x) no-repeat scroll 92% 2px white;
+    border-radius: 25px;
+    float: right;
+    height: 39px;
+    margin-top: 18px;
+    max-width: 100px;
+    padding-left: 12px;
+    padding-right: 48px;
+    text-align: left;
+    vertical-align: bottom;
+}
+#voteup-point{
+    position:relative;
+    top:50%;
+    font-size: 15px;
+    transform:translateY(-50%);
+    -webkit-transform:translateY(-50%);
+    color: #ff524f;
+}
+#footer{
+    clear:both;
+    text-align:center;
+    margin:10px auto;
+    font-size:12px;
+    color:#959595;
+}
+#user-spec{
+    float:right;
+    position:relative;
+    top:50%;
+    transform:translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    text-align:right;
+    line-height:18px;
+}
+#user-spec img{
+}
+#user-spec *{
+    font-size:12px;
+    vertical-align:middle;
+}
+#photos{
+    margin-left:5px;
+    margin-right:5px;
+}
+.photo-item{
+    width:32.0%;
+    display:inline-block;
+}
+.photo-item img{width:100%}
+.grey{
+    color:#959595;
+}
+#download{
+    position:fixed;
+    text-align:center;
+    margin:0px auto;
+    left:0;
+    right:0;
+    font-size:12px;
+    bottom:0px;
+    margin-top:10px;
+    background-color:black;
+    padding-bottom:16px;
+}
+.redline{margin-bottom:10px;}
+#download a{
+    font-size:20px;
+    display:block;
+    text-decoration:none;
+}
+#footer{display:none}
+@media only screen and (-moz-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-devicepixel-ratio: 1.5), only screen and (min-resolution: 1.5dppx) {
+    #photo-voteup{
+        background-image: url(/img/voteup.png) no-repeat;
+        background-size:35px;
+    }
+}

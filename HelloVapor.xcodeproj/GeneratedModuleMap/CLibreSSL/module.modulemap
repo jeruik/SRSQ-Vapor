@@ -1,0 +1,5 @@
+module CLibreSSL {
+    umbrella header "/Users/cailingyun/HelloVapor/Packages/CLibreSSL-1.0.0/Sources/CLibreSSL/include/CLibreSSL.h"
+    link "CLibreSSL"
+    export *
+}

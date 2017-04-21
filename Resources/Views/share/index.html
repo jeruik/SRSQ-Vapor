@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="zh-CN"><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0">
+    <meta name="description" content="私人社区">
+    <meta name="apple-itunes-app" content="app-id=1127768538">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="share/styles/mob.css" type="text/css">
+    <title>私人社区</title>
+</head>
+<body>
+<div id="content">
+    <div class="head">
+        <img src="share/images/av95108_1_1477481744.jpg" id="avatar">
+        <div id="user-spec">
+            <div class="acthot"><img src="share/images/vote_num2x.png" alt="" width="14px"></div>
+            <div class="grey"><img src="share/images/location2x.png" alt="" width="8px"></div>
+        </div>
+        <div id="level">
+            <div id="username" style= "margin-top:3px;">----</div>
+            <div id="sex" style= "margin-top:2px;">--</div>
+        </div>
+    </div>
+    <div><p id="userDes" style="margin:0px 5px"></p><div>
+    <div id="photos">
+    </div>
+</div><!-- content -->
+<div id="download">
+    <img src="share/images/red-line.png" alt="" class="redline" width="100%">
+    <a href="https://itunes.apple.com/cn/app/id1127768538" onclick="">下载私人社区</a></div>
+<div id="footer">2017私人社区网络科技有限公司</div>
+
+
+<script src="share/styles/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+    
+    function GetQueryString(name) {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r!=null)return  unescape(r[2]); return null;
+    }
+
+var pre = 'http://cly.local:8080/share?id=';
+var blueUrl = location.href;
+var sub = 'profileShare';
+var param = GetQueryString("srsqaccount");
+if (param == null) {
+    param = GetQueryString("id");
+    sub = 'shareData';
+}
+
+
+$.ajax({
+       // http://cly.local:8080/
+       // https://srsq.herokuapp.com/
+       type:"GET",
+       url: "http://cly.local:8080/" + sub + "?id=" + param,
+       success: function( result ) {
+
+       var dict = result["data"];
+       var name = dict["username"];
+       var photo = '';
+       var zancount = '';
+       var content = '';
+       var localtion = dict["sqlocal"];
+       if (sub == 'shareData') {
+            photo = dict["photostr"];
+            zancount = dict["zancount"];
+            content = dict["actcontent"];
+       } else {
+            photo = dict["photos"];
+            zancount = dict["zannum"];
+            localtion = '未知';
+            content = dict["aboutme"];
+       }
+    
+       var sex = dict["sex"];
+       
+       var str = photo.substring(1,photo.length-1);
+       
+       var s = '"';
+       var str2 = str.replace(s,"");
+       for (var i = 0; i < 18; i++) {
+       if(str2.indexOf(s) > 0) {
+       str2 = str2.replace(s,"");
+       }
+       }
+       
+       var imgs = str2.split(',')
+       console.log(imgs);
+       console.log(imgs.length);
+       
+       var headimgurl = dict["headimgurl"];
+       var sqlocal = dict["sqlocal"];
+       
+       var div = document.getElementById('username');
+       var avatar = document.getElementById('avatar');
+       var localtionDiv = document.getElementsByClassName('grey')[0];
+       var zanDiv = document.getElementsByClassName('acthot')[0];
+       var sexDiv = document.getElementById('sex');
+       var desDiv = document.getElementById('userDes');
+       
+       desDiv.innerHTML = content;
+       localtionDiv.innerHTML = localtion;
+       zanDiv.innerHTML = '💕' + '&nbsp' + zancount;
+       var sexStr = '';
+       if (sex == "1") {
+       sexStr = '男';
+       } else {
+       sexStr = '女';
+       }
+       sexDiv.innerHTML = 'sex:' + '&nbsp' + sexStr;
+       div.innerHTML = name;
+       document.title = name
+       avatar.src = headimgurl;
+       
+       var bigDiv = document.getElementById('photos');
+       for(var i = 0;i<imgs.length;i++){
+       var div = document.createElement('div');
+       var img = document.createElement('img');
+       var url1 = imgs[i];
+       var url2 = 'http://olt49m07v.bkt.clouddn.com/';
+       var url = url2 + url1;
+       console.log(url);
+       div.style.width = '31%';
+       div.style.margin = '3px 3px 0px 3px';
+       div.style.display = 'inline-block';
+       img.src = url;
+       img.alt = "";
+       img.style.width = '100%';
+       div.appendChild(img);
+       bigDiv.appendChild(div);
+       }
+       }
+       });
+       
+       var url1 = imgs[0];
+       var url2 = 'http://olt49m07v.bkt.clouddn.com/';
+       var url = url2 + url1;
+              var imgUrl = url;  //图片LOGO注意必须是绝对路径
+              var lineLink = location.href;   //网站网址，必须是绝对路径
+              var descContent = desDiv.innerHTML; //分享给朋友或朋友圈时的文字简介
+              var shareTitle = document.title;  //分享title
+              var appid = ''; //apiID，可留空
+               function shareFriend() {
+                       WeixinJSBridge.invoke('sendAppMessage',{
+                                                             "appid": appid,
+                                                             "img_url": imgUrl,
+                                                             "img_width": "200",
+                                                             "img_height": "200",
+                                                             "link": lineLink,
+                                                             "desc": descContent,
+                                                             "title": shareTitle
+                                                         }, function(res) {
+                                                             //_report('send_msg', res.err_msg);
+                                                         })
+                   }
+        function shareTimeline() {
+                WeixinJSBridge.invoke('shareTimeline',{
+                                                      "img_url": imgUrl,
+                                                      "img_width": "200",
+                                                      "img_height": "200",
+                                                      "link": lineLink,
+                                                      "desc": descContent,
+                                                      "title": shareTitle
+                                                  }, function(res) {
+                                                         //_report('timeline', res.err_msg);
+                                                  });
+            }
+        function shareWeibo() {
+                WeixinJSBridge.invoke('shareWeibo',{
+                                                      "content": descContent,
+                                                      "url": lineLink,
+                                                  }, function(res) {
+                                                      //_report('weibo', res.err_msg);
+                                                  });
+            }
+        // 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
+       document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+                                             // 发送给好友
+                                            WeixinJSBridge.on('menu:share:appmessage', function(argv){
+                                                                              shareFriend();
+                                                                          });
+                                             // 分享到朋友圈
+                                            WeixinJSBridge.on('menu:share:timeline', function(argv){
+                                                                              shareTimeline();
+                                                                          });
+                                             // 分享到微博
+                                            WeixinJSBridge.on('menu:share:weibo', function(argv){
+                                                                              shareWeibo();
+                                                                          });
+                                         }, false);
+       
+    </script>
+
+</body></html>
